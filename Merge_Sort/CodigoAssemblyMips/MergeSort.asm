@@ -23,7 +23,7 @@ loop_leitura:
 	move $t1, $v0 
 	
 	#encerra leitura
-	beq	$t1, $zero, fim
+	beq	$t1, $zero, imprime_array
 
 	#salva valor lido no espaço alocado e incrementa o $t0 para avançar 4 bytes para o proximo inteiro
 	add $t2, $s0, $t0
@@ -34,6 +34,26 @@ loop_leitura:
 	addi $s1, $s1, 1
 
 	j loop_leitura
+
+imprime_array: 
+	li $t0, 0 # deslocamento de bytes
+	li $t1, 0 # iterador i
+
+loop_imprime:
+	# se i >= n
+	bge $t1, $s1, fim
+
+	add $t2, $s0, $t0 
+	
+	#imprimir elemento do indice i do array 
+	li $v0, 1
+	lw $a0, 0($t2)
+	syscall
+
+	addi $t0, $t0, 4
+	addi $t1, $t1, 1
+
+	j loop_imprime
 
 fim:
 	li $v0, 10
