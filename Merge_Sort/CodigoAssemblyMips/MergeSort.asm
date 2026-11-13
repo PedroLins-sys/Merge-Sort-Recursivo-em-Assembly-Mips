@@ -4,6 +4,7 @@
 	
 	.align 2
 	array: .space 400
+	aux: .space 400
 
 .text
 main:
@@ -23,7 +24,7 @@ loop_leitura:
 	move $t1, $v0 
 	
 	#encerra leitura
-	beq	$t1, $zero, imprime_array
+	beq	$t1, $zero, sort
 
 	#salva valor lido no espaço alocado e incrementa o $t0 para avançar 4 bytes para o proximo inteiro
 	add $t2, $s0, $t0
@@ -34,6 +35,14 @@ loop_leitura:
 	addi $s1, $s1, 1
 
 	j loop_leitura
+
+sort:
+	move $a0, array #array
+	la $a1, aux #array auxiliar
+	li $a2, 0 #inicio
+	addi $a3, $s1, -1 #fim (n-1)
+	jal merge_sort
+	j imprime_array
 
 imprime_array: 
 	li $t0, 0 # deslocamento de bytes
@@ -58,3 +67,10 @@ loop_imprime:
 fim:
 	li $v0, 10
 	syscall
+
+merge_sort:
+	jr		$ra
+
+merge:
+	jr		$ra
+	
