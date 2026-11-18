@@ -61,6 +61,10 @@ loop_imprime:
 	lw $a0, 0($t2)
 	syscall
 
+	li $v0, 11
+	li $a0, 32
+	syscall
+
 	addi $t0, $t0, 4
 	addi $t1, $t1, 1
 
