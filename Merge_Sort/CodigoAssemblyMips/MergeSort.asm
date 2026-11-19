@@ -44,7 +44,6 @@ sort:
 	addi $a3, $s1, -1 # fim (n-1)
 
 	jal merge_sort
-	j imprime_array
 
 imprime_array: 
 	li $t0, 0 # deslocamento de bytes
@@ -61,10 +60,12 @@ loop_imprime:
 	lw $a0, 0($t2)
 	syscall
 
+	# espaco entre os numeros ordenados
 	li $v0, 11
 	li $a0, 32
 	syscall
 
+	# avanca 4 bytes na memoria
 	addi $t0, $t0, 4
 	addi $t1, $t1, 1
 
@@ -195,11 +196,9 @@ merge:
 	lw $t7, 0($t4)
 	sw $t7, 0($t6) # aux[k] = array[i] 
 
-	addi $t1, $t1, 1 # k++
-	addi $t6, $t6, 4 # avança 4 bytes no enderecamento
-
 	addi $t0, $t0, 1 # i++
-	addi $t4, $t4, 4 # avança 4 bytes no enderecamento
+	addi $t4, $t4, 4 
+	addi $t6, $t6, 4 # avança 4 bytes no enderecamento
 	
 	j while2
 	saida3:
@@ -210,11 +209,10 @@ merge:
 	lw $t8, 0($t5)
 	sw $t8, 0($t6) # aux[k] = array[j] 
 
-	addi $t1, $t1, 1 # k++
-	addi $t6, $t6, 4 # avança 4 bytes no enderecamento
 
 	addi $t3, $t3, 1 # j++
-	addi $t5, $t5, 4 # avança 4 bytes no enderecamento
+	addi $t5, $t5, 4
+	addi $t6, $t6, 4 # avança 4 bytes no enderecamento
 
 	j while3
 	saida4:
@@ -242,4 +240,3 @@ merge:
 	j for
 	saida5:
 	jr	$ra
-	
